@@ -7,3 +7,7 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 module.exports = router;
+
+//creer un dossier service
+
+//sequalize pour base de donnée sql (ORM)
