@@ -1,15 +1,19 @@
 const Sauce = require("../models/Sauce");
 const fs = require("fs");
 
-exports.createSauce = async (sauce, req) => {
+// exports.handleImages = () => {
+//   return (imageUrl = `${req.protocol}://${req.get("host")}/images/${
+//     req.file.filename
+//   }`);
+// };
+
+exports.createSauce = async (sauce, protocol, host, filename) => {
   const sauceObject = await JSON.parse(sauce);
   delete sauceObject._id;
 
   return new Sauce({
     ...sauceObject,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
+    imageUrl: `${protocol}://${host}/images/${filename}`,
   }).save();
 };
 
@@ -21,13 +25,11 @@ exports.getOneSauce = (id) => {
   return Sauce.findOne({ _id: id });
 };
 
-exports.updateSauce = (sauce, file, req, id) => {
+exports.updateSauce = (sauce, file, protocol, host, id) => {
   const sauceObject = file
     ? {
         ...JSON.parse(sauce),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          file.filename
-        }`,
+        imageUrl: `${protocol}://${host}/images/${file.filename}`,
       }
     : { ...req.body };
   return Sauce.updateOne({ _id: id }, { ...sauceObject, _id: id });

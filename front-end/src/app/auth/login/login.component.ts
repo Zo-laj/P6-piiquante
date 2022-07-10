@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       }),
       catchError(error => {
         this.loading = false;
-        this.errorMsg = error.message;
+        this.errorMsg = "Utilisateur ou mot de passe incorrect";
         return EMPTY;
       })
     ).subscribe();

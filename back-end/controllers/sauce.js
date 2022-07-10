@@ -3,7 +3,12 @@ const service = require("../service/sauce");
 exports.createSauce = (req, res) => {
   try {
     service
-      .createSauce(req.body.sauce, req)
+      .createSauce(
+        req.body.sauce,
+        req.protocol,
+        req.get("host"),
+        req.file.filename
+      )
       .then(() =>
         res.status(201).json({ message: "Sauce successfully created" })
       )
@@ -38,7 +43,13 @@ exports.getOneSauce = (req, res) => {
 exports.updateSauce = (req, res) => {
   try {
     service
-      .updateSauce(req.body.sauce, req.file, req, req.params.id)
+      .updateSauce(
+        req.body.sauce,
+        req.file,
+        req.protocol,
+        req.get("host"),
+        req.params.id
+      )
       .then(() => res.status(200).json({ message: "Object updated !" }))
       .catch((error) => res.status(400).json({ error }));
   } catch {

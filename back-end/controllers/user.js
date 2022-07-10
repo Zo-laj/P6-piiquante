@@ -1,6 +1,4 @@
-const jwt = require("jsonwebtoken");
 const userService = require("../service/user");
-require("dotenv").config();
 
 exports.signup = (req, res) => {
   try {
@@ -30,13 +28,7 @@ exports.login = (req, res) => {
 
         res.status(200).json({
           userId: user.validUser._id,
-          token: jwt.sign(
-            { userId: user.validUser._id },
-            `${process.env.SECRET}`,
-            {
-              expiresIn: "24h",
-            }
-          ),
+          token: userService.createJwt(user.validUser._id),
         });
       })
       .catch((error) => res.status(500).json({ error }));

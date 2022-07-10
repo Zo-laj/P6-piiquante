@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
       }),
       catchError(error => {
         this.loading = false;
-        this.errorMsg = error.message;
+        this.errorMsg = "Un compte existe déjà pour cette adresse email";
         return EMPTY;
       })
     ).subscribe();
